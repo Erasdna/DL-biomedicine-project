@@ -8,8 +8,15 @@ class CustomSimpleDataset(FewShotDataset):
     _data_dir = './data'
     
     def __init__(self, batch_size, root='./data/', mode='train', min_samples=20):
-        self.samples = torch.randn((200, 100), generator=torch.Generator().manual_seed(1))
-        self.labels = torch.randint(0, 5, (200, ), generator=torch.Generator().manual_seed(1))
+        if mode == 'train':
+            self.samples = torch.randn((200, 100), generator=torch.Generator().manual_seed(1))
+            self.labels = torch.randint(0, 5, (200, ), generator=torch.Generator().manual_seed(1))
+        elif mode == 'val':
+            self.samples = torch.rand((50, 100), generator=torch.Generator().manual_seed(2))
+            self.labels = torch.randint(0, 5, (50, ), generator=torch.Generator().manual_seed(2))
+        else:
+            self.samples = torch.rand((50, 100), generator=torch.Generator().manual_seed(3))
+            self.labels = torch.randint(0, 5, (50, ), generator=torch.Generator().manual_seed(3))
         self.batch_size = batch_size
         super().__init__()
 

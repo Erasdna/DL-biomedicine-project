@@ -1,0 +1,9 @@
+defaults:
+  - meta_base
+
+cls:
+  _target_: methods.settoset.FEAT
+  score:
+    _target_: methods.settoset.EuclideanDistanceScore
+
+name: protonet
