@@ -61,6 +61,7 @@ class SetToSetBase(MetaTemplate):
             cl_y_query = torch.from_numpy(
                 np.repeat(range(self.n_way), self.n_support + self.n_query)
             )
+            cl_y_query = Variable(cl_y_query.cuda())
             return self.loss_fn(scores, y_query) + self.loss_fn(cl_scores, cl_y_query)
 
         return self.loss_fn(scores, y_query)
