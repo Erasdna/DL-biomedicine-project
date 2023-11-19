@@ -7,6 +7,6 @@ cls:
   dropout: 0.1
   dim_feedforward: 512
   score:
-    _target_: methods.settoset.settoset.EuclideanDistanceScore
+    _target_: methods.settoset.settoset.CosineSimilarityScore
 
 name: protonet

@@ -28,8 +28,8 @@ class BidirectionalLSTM(nn.Module):
         out = out + x
         return out.squeeze()
 
-class FEAL(SetToSetBase):
+class FEALSTM(SetToSetBase):
     def __init__(self, backbone, n_way, n_support, score, num_layers):
-        super(FEAL, self).__init__(backbone, n_way, n_support, score, None)
+        super(FEALSTM, self).__init__(backbone, n_way, n_support, score, None)
         self.transform = BidirectionalLSTM(self.feat_dim, num_layers, self.feat_dim // 2)
 

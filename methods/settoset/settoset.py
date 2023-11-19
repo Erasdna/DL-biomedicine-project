@@ -3,6 +3,7 @@
 import numpy as np
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.autograd import Variable
 
 from methods.meta_template import MetaTemplate
@@ -89,3 +90,17 @@ class EuclideanDistanceScore(nn.Module):
         distances = torch.pow(x - y, 2).sum(2)
         return -distances
 
+class CosineSimilarityScore(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+    def forward(self, x, y):
+        # x: N x D
+        # y: M x D
+        n = x.size(0)
+        m = y.size(0)
+        d = x.size(1)
+        assert d == y.size(1)
+
+        score = F.normalize(x) @ F.normalize(y).T
+        return score
