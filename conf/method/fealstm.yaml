@@ -7,4 +7,4 @@ cls:
   score:
     _target_: methods.settoset.settoset.EuclideanDistanceScore
 
-name: protonet
+name: fealstm

@@ -9,4 +9,4 @@ cls:
   score:
     _target_: methods.settoset.settoset.CosineSimilarityScore
 
-name: protonet
+name: feat
