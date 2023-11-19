@@ -7,11 +7,11 @@ from torch.autograd import Variable
 
 from methods.meta_template import MetaTemplate
 
-
 class SetToSetBase(MetaTemplate):
-    def __init__(self, backbone, n_way, n_support, score):
+    def __init__(self, backbone, n_way, n_support, score, transform):
         super(SetToSetBase, self).__init__(backbone, n_way, n_support)
         self.score = score
+        self.transform = transform
         self.loss_fn = nn.CrossEntropyLoss()
 
     def set_forward(self, x, is_feature=False):
@@ -33,7 +33,9 @@ class SetToSetBase(MetaTemplate):
 
     def set_forward_loss(self, x):
         y_query = torch.from_numpy(np.repeat(range(self.n_way), self.n_query))
-        y_query = Variable(y_query.cuda())
+        y_query = Variable(y_query)
+        if torch.cuda.is_available():
+            y_query = y_query.cuda()
 
         scores = self.set_forward(x)
 
@@ -61,16 +63,12 @@ class SetToSetBase(MetaTemplate):
             cl_y_query = torch.from_numpy(
                 np.repeat(range(self.n_way), self.n_support + self.n_query)
             )
-            cl_y_query = Variable(cl_y_query.cuda())
+            cl_y_query = Variable(cl_y_query)
+            if torch.cuda.is_available():
+                cl_y_query = cl_y_query.cuda()
             return self.loss_fn(scores, y_query) + self.loss_fn(cl_scores, cl_y_query)
 
         return self.loss_fn(scores, y_query)
-
-
-class FEAT(SetToSetBase):
-    def __init__(self, backbone, n_way, n_support, score):
-        super(FEAT, self).__init__(backbone, n_way, n_support, score)
-        self.transform = torch.nn.TransformerEncoderLayer(self.feat_dim, 1)
 
 
 class EuclideanDistanceScore(nn.Module):
@@ -90,3 +88,4 @@ class EuclideanDistanceScore(nn.Module):
 
         distances = torch.pow(x - y, 2).sum(2)
         return -distances
+
