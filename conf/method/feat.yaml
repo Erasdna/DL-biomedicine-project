@@ -3,9 +3,9 @@ defaults:
 
 cls:
   _target_: methods.settoset.feat.FEAT
-  n_head: 4
+  n_head: 1
   dropout: 0.1
-  dim_feedforward: 512
+  dim_feedforward: 2048
   score:
     _target_: methods.settoset.settoset.CosineSimilarityScore
 
