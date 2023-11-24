@@ -8,7 +8,7 @@ for n_way in 3 5 7; do
                 for dropout in 0.2 0.1 0.05 0.01; do
                     for score in EuclideanDistanceScore CosineSimilarityScore; do
                         for lr in 0.001 0.0001 0.005; do
-                            python run.py exp.name=${dataset}_feat method=feat dataset=${dataset} n_way=$n_way n_shot=$n_shot method.cls.n_head=$head method.cls.dim_feedforward=$ff_dim method.cls.dropout=$dropout method.cls.score=methods.settoset.settoset.$score lr=$lr method.stop_epoch=40
+                            python run.py exp.name=${dataset}_feat method=feat dataset=${dataset} n_way=$n_way n_shot=$n_shot method.cls.n_head=$head method.cls.dim_feedforward=$ff_dim method.cls.dropout=$dropout method.cls.score._target_=methods.settoset.settoset.$score lr=$lr method.stop_epoch=40
                         done
                     done
                 done
@@ -23,7 +23,7 @@ for n_way in 3 5 7; do
         for num_layers in 1 2 3 4; do
             for score in EuclideanDistanceScore CosineSimilarityScore; do
                 for lr in 0.001 0.0001 0.005; do
-                    python run.py exp.name=${dataset}_fealstm method=fealstm dataset=${dataset} n_way=$n_way n_shot=$n_shot method.cls.num_layers=$num_layers method.cls.score=methods.settoset.settoset.$score lr=$lr method.stop_epoch=40
+                    python run.py exp.name=${dataset}_fealstm method=fealstm dataset=${dataset} n_way=$n_way n_shot=$n_shot method.cls.num_layers=$num_layers method.cls.score._target_=methods.settoset.settoset.$score lr=$lr method.stop_epoch=40
                 done
             done
         done
