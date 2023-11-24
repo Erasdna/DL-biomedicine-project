@@ -62,11 +62,11 @@ def run(cfg):
     if cfg.mode == "train":
         model = train(train_loader, val_loader, model, cfg)
 
-    results = [wandb.run.name]
+    results = []
     print("Checkpoint directory:", cfg.checkpoint.dir)
     for split in cfg.eval_split:
         acc_mean, acc_std = test(cfg, model, split)
-        results.append([split, acc_mean, acc_std])
+        results.append([wandb.run.name, split, acc_mean, acc_std])
 
     print(f"Results logged to ./checkpoints/{cfg.exp.name}/results.txt")
 
