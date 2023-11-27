@@ -121,7 +121,7 @@ class EuclideanDistanceScore(nn.Module):
         n = x.size(0)
         m = y.size(0)
         d = x.size(1)
-        assert d == y.size(1)
+        assert d == y.size(1), "Tensors must have the same dimension D."
 
         x = x.unsqueeze(1).expand(n, m, d)
         y = y.unsqueeze(0).expand(n, m, d)
@@ -148,6 +148,6 @@ class CosineSimilarityScore(nn.Module):
         """
         assert (
             x.shape[1] == y.shape[1]
-        ), "Tensors must have the same number of dimensions D."
+        ), "Tensors must have the same dimension D."
         score = F.normalize(x) @ F.normalize(y).T
         return score
