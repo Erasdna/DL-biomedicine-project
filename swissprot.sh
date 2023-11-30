@@ -1,4 +1,4 @@
-DATASET=${DATASET:-"tabula_muris"}
+DATASET=${DATASET:-"swissprot"}
 STOP_EPOCH=${STOP_EPOCH:-"40"}
 
 echo "DATASET=$DATASET"
@@ -8,7 +8,7 @@ echo "STOP_EPOCH=$STOP_EPOCH"
 for n_way in 5; do
     for n_shot in 1 5; do
         for head in 1 2 4; do
-            for ff_dim in 32 64 128; do
+            for ff_dim in 256 512 1024; do
                 for dropout in 0.2 0.1; do
                     for score in EuclideanDistanceScore CosineSimilarityScore; do
                         for lr in 0.001 0.0001; do
