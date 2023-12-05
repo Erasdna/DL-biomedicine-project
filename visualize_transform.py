@@ -102,18 +102,18 @@ def visualize(model, dataloader, index):
     
     # Construct dataframes for visualization
     query_df = pd.DataFrame(query_pca, columns=["x", "y"])
-    query_df["group"] = labels
-    query_df["point"] = "Datapoint"
+    query_df["Class"] = labels
+    query_df["Type"] = "Datapoint"
     query_df["alpha"] = 0.6
 
     old_means_df = pd.DataFrame(old_means_pca, columns=["x", "y"])
-    old_means_df["group"] = query_df["group"].unique()
-    old_means_df["point"] = "Base prototype"
+    old_means_df["Class"] = query_df["Class"].unique()
+    old_means_df["Type"] = "Base prototype"
     old_means_df["alpha"] = 1
 
     new_means_df = pd.DataFrame(new_means_pca, columns=["x", "y"])
-    new_means_df["group"] = query_df["group"].unique()
-    new_means_df["point"] = "Transformed prototype"
+    new_means_df["Class"] = query_df["Class"].unique()
+    new_means_df["Type"] = "Transformed prototype"
     new_means_df["alpha"] = 1
 
     # Visualize data
@@ -121,7 +121,7 @@ def visualize(model, dataloader, index):
     fig, ax = plt.subplots(figsize=(12, 8), dpi=150)
 
     data = pd.concat([query_df, old_means_df, new_means_df])
-    sns.scatterplot(data, x="x", y="y", size="point", sizes=[100, 200, 300], alpha=data["alpha"], markers=[".", "^", "*"], style="point", hue="group", palette="tab10", legend="auto")
+    sns.scatterplot(data, x="x", y="y", size="Type", sizes=[100, 200, 300], alpha=data["alpha"], markers=[".", "^", "*"], style="Type", hue="Class", palette="tab10", legend="auto")
     return fig, ax
 
 
