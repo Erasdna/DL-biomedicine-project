@@ -57,8 +57,6 @@ def run(cfg):
         raise ValueError(f"Unknown mode: {cfg.mode}")
 
     fix_seed(cfg.exp.seed)
-    torch.use_deterministic_algorithms(True)
-    torch.backends.cudnn.deterministic = True
 
     train_loader, val_loader, model = initialize_dataset_model(cfg)
 

@@ -82,8 +82,15 @@ def visualize(model, dataloader, index):
     data, labels = next(islice(dataloader, index, None))
     W, N, D = data.shape
     query = data.reshape(-1, D)
-    query = model.feature(query).detach()
+    if torch.cuda.is_available():
+        query = query.cuda()
+    query = model.feature(query).cpu().detach()
     labels = labels.reshape(-1)
+
+    means = torch.Tensor(query).reshape(W, N, -1).mean(1)
+    if torch.cuda.is_available():
+        means = means.cuda()
+    means_transformed = model.transform(means).cpu().detach()
 
     # Perform PCA
     pca = PCA(2, random_state=1)
@@ -91,8 +98,6 @@ def visualize(model, dataloader, index):
 
     query_pca = pca.transform(query)
     old_means_pca = pca.transform(query.reshape(W, N, -1).mean(1))
-
-    means_transformed = model.transform(torch.Tensor(query).reshape(W, N, -1).mean(1)).detach()
     new_means_pca = pca.transform(means_transformed)
     
     # Construct dataframes for visualization
