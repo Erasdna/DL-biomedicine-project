@@ -54,6 +54,9 @@ def initialize_dataset_model(cfg):
 def run(cfg):
     print(OmegaConf.to_yaml(cfg, resolve=True))
 
+    if cfg.method.name not in ["feat", "feads", "fealstm"]:
+        raise ValueError("You should run this script with FEAT/FEADS/FEALSTM method.")
+
     if "name" not in cfg.exp:
         raise ValueError("The 'exp.name' argument is required!")
 
