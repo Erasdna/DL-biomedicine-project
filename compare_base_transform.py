@@ -26,8 +26,6 @@ def initialize_dataset_model(cfg):
         test_dataset = instantiate(
             cfg.dataset.set_cls, n_episode=cfg.iter_num, mode="test"
         )
-    if torch.cuda.is_available():
-        test_dataset = test_dataset.to(torch.device("cuda"))
 
     test_loader = test_dataset.get_data_loader()
 
@@ -39,6 +37,9 @@ def initialize_dataset_model(cfg):
 
     # Instantiate few-shot method class
     model = instantiate(cfg.method.cls, backbone=backbone)
+
+    if torch.cuda.is_available():
+        model = model.cuda()
 
     return test_loader, model
 
