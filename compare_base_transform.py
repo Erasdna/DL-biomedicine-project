@@ -69,7 +69,6 @@ def run(cfg):
     model_base.eval()
 
     print(f"Base embeddings (acc, std): {test(model_base, test_dataset, cfg)}")
-    print(f"Transformed embeddings (acc, std): {test(model, test_dataset, cfg)}")
 
 
 def test(model, test_dataset, cfg):
