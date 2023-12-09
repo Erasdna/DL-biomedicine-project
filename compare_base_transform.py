@@ -62,7 +62,7 @@ def run(cfg):
 
     model_file = get_model_file(cfg)
 
-    model.load_state_dict(torch.load(model_file)["state"])
+    model.load_state_dict(torch.load(model_file, map_location="cuda" if torch.cuda.is_available() else "cpu")["state"])
     model.eval()
 
     model_base = ProtoNet(model.feature, cfg.n_way, cfg.n_shot)

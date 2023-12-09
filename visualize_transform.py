@@ -69,7 +69,7 @@ def run(cfg):
 
     model_file = get_model_file(cfg)
 
-    model.load_state_dict(torch.load(model_file)['state'])
+    model.load_state_dict(torch.load(model_file, map_location="cuda" if torch.cuda.is_available() else "cpu")['state'])
     model.eval()
 
     fig, ax = visualize(model, val_loader, cfg.get("dataloader_index", 0))
