@@ -89,6 +89,7 @@ def visualize(model, dataloader, index):
         query = query.cuda()
     query = model.feature(query).cpu().detach()
     labels = labels.reshape(-1)
+    labels = np.unique(labels, return_inverse=True)[1] + 1
 
     means = torch.Tensor(query).reshape(W, N, -1).mean(1)
     if torch.cuda.is_available():
