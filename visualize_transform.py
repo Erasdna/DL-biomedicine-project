@@ -75,7 +75,7 @@ def run(cfg):
     fig, ax = visualize(model, val_loader, cfg.get("dataloader_index", 0))
 
     if "output" in cfg:
-        fig.savefig(cfg.output)
+        fig.savefig(cfg.output, bbox_inches='tight')
     else:
         plt.show()
 
@@ -107,25 +107,38 @@ def visualize(model, dataloader, index):
     # Construct dataframes for visualization
     query_df = pd.DataFrame(query_pca, columns=["x", "y"])
     query_df["Class"] = labels
-    query_df["Type"] = "Datapoint"
+    query_df["Type"] = "Data"
     query_df["alpha"] = 0.6
 
     old_means_df = pd.DataFrame(old_means_pca, columns=["x", "y"])
     old_means_df["Class"] = query_df["Class"].unique()
-    old_means_df["Type"] = "Base prototype"
+    old_means_df["Type"] = "Old"
     old_means_df["alpha"] = 1
 
     new_means_df = pd.DataFrame(new_means_pca, columns=["x", "y"])
     new_means_df["Class"] = query_df["Class"].unique()
-    new_means_df["Type"] = "Transformed prototype"
+    new_means_df["Type"] = "New"
     new_means_df["alpha"] = 1
 
     # Visualize data
     sns.set_theme()
-    fig, ax = plt.subplots(figsize=(12, 8), dpi=150)
+    sns.set_style("white")
+    fig, ax = plt.subplots(figsize=(5, 4), dpi=200)
+   
 
     data = pd.concat([query_df, old_means_df, new_means_df])
-    sns.scatterplot(data, x="x", y="y", size="Type", sizes=[100, 200, 300], alpha=data["alpha"], markers=[".", "^", "*"], style="Type", hue="Class", palette="tab10", legend="auto")
+    sns.scatterplot(data, x="x", y="y", size="Type", sizes=[100, 300, 300], alpha=data["alpha"], markers=[".", "^", "*"], style="Type", hue="Class", palette="tab10", legend="brief")
+    
+    # Fix layout (move legend outside, remove x and y labels)
+    sns.move_legend(ax, "upper left", bbox_to_anchor=(1, 1))
+    ax.set(xticklabels=[])
+    ax.tick_params(bottom=False)
+    ax.set(yticklabels=[])
+    ax.tick_params(left=False)
+    ax.set(xlabel=None)
+    ax.set(ylabel=None)
+    fig.tight_layout()
+
     return fig, ax
 
 
