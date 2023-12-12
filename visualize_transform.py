@@ -54,6 +54,7 @@ def initialize_dataset_model(cfg):
 def run(cfg):
     print(OmegaConf.to_yaml(cfg, resolve=True))
 
+    # Check that method used is one of our implemented methods
     if cfg.method.name not in ["feat", "feads", "fealstm"]:
         raise ValueError("You should run this script with FEAT/FEADS/FEALSTM method.")
 
@@ -63,17 +64,22 @@ def run(cfg):
     if cfg.mode not in ["train", "test"]:
         raise ValueError(f"Unknown mode: {cfg.mode}")
 
+    # Fix the seed
     fix_seed(cfg.exp.seed)
 
+    # Get the dataloader and model
     train_loader, val_loader, model = initialize_dataset_model(cfg)
 
+    # Initialize model
     model_file = get_model_file(cfg)
 
     model.load_state_dict(torch.load(model_file, map_location="cuda" if torch.cuda.is_available() else "cpu")['state'])
     model.eval()
 
+    # Visualize
     fig, ax = visualize(model, val_loader, cfg.get("dataloader_index", 0))
 
+    # Output the visualization to file or display the visualization
     if "output" in cfg:
         fig.savefig(cfg.output, bbox_inches='tight')
     else:
@@ -91,15 +97,19 @@ def visualize(model, dataloader, index):
     labels = labels.reshape(-1)
     labels = np.unique(labels, return_inverse=True)[1] + 1
 
+    # Calculate prototypes
     means = torch.Tensor(query).reshape(W, N, -1).mean(1)
     if torch.cuda.is_available():
         means = means.cuda()
+    
+    # Transform prototypes
     means_transformed = model.transform(means).cpu().detach()
 
     # Perform PCA
     pca = PCA(2, random_state=1)
     pca = pca.fit(query)
 
+    # Use PCA on the data
     query_pca = pca.transform(query)
     old_means_pca = pca.transform(query.reshape(W, N, -1).mean(1))
     new_means_pca = pca.transform(means_transformed)
@@ -125,7 +135,6 @@ def visualize(model, dataloader, index):
     sns.set_style("white")
     fig, ax = plt.subplots(figsize=(5, 4), dpi=200)
    
-
     data = pd.concat([query_df, old_means_df, new_means_df])
     sns.scatterplot(data, x="x", y="y", size="Type", sizes=[100, 300, 300], alpha=data["alpha"], markers=[".", "^", "*"], style="Type", hue="Class", palette="tab10", legend="brief")
     

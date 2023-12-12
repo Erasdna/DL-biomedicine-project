@@ -47,6 +47,7 @@ def initialize_dataset_model(cfg):
 def run(cfg):
     print(OmegaConf.to_yaml(cfg, resolve=True))
 
+    # Check that method used is one of our implemented methods
     if cfg.method.name not in ["feat", "feads", "fealstm"]:
         raise ValueError("You should run this script with FEAT/FEADS/FEALSTM method.")
 
@@ -55,16 +56,20 @@ def run(cfg):
 
     if cfg.mode not in ["train", "test"]:
         raise ValueError(f"Unknown mode: {cfg.mode}")
-
+    
+    # Fix the seed
     fix_seed(cfg.exp.seed)
 
+    # Get the dataloader and model
     test_dataset, model = initialize_dataset_model(cfg)
 
+    # Initialize model
     model_file = get_model_file(cfg)
 
     model.load_state_dict(torch.load(model_file, map_location="cuda" if torch.cuda.is_available() else "cpu")["state"])
     model.eval()
 
+    # Use the model's backbone for the ProtoNet architecture (=FEAx without transformation)
     model_base = ProtoNet(model.feature, cfg.n_way, cfg.n_shot)
     model_base.eval()
 
