@@ -1,0 +1,10 @@
+defaults:
+  - meta_base
+
+cls:
+  _target_: methods.settoset.fealstm.FEALSTM
+  num_layers: 1
+  score:
+    _target_: methods.settoset.settoset.EuclideanDistanceScore
+
+name: fealstm

@@ -28,8 +28,8 @@ checkpoint:
   time: latest
 
 wandb:
-  project: ???
-  entity: ???
+  project: few-shot-learning
+  entity: dlbio-feat
   mode: "online" # Can set to offline, disabled
 
 iter_num: 600
