@@ -1,6 +1,14 @@
 # Few Shot Benchmark for Biomedical Datasets
 
 
+In this project, we introduce a novel extension to the existing few-shot learning benchmark. We implement several variants of the Feature Embedding Adaptation with Transformers (FEAT) algorithm proposed by [Ye et al., 2021](https://arxiv.org/abs/1812.03664), with the goal of enhancing the existing framework. The implemented models are applied on two biomedical datasets, namely Tabula Muris and SwissProt.
+
+The implementations of the methods (FEADS, FEALSTM, FEAT) are available in the folder `methods/settoset`. Their corresponding configurations files are given in folder `conf/method` in the files `feads.yaml`, `fealstm.yaml` and `feat.yaml`.
+
+To help with the training and validation process, we use bash scripts. Script `baselines.sh` is used to run the baseline methods on both datasets using the default configuration files. Scripts `tabula_muris.sh` and `swissprot.sh` are used to tune the hyperparameters on their respective datasets. Script `final_hyps.sh` is used to run the training of 3 implemented methods using their best hyperparemetrs on for each dataset.
+
+Python file `visualize_transform.py` is used for visualizing the transformation and `compare_base_transform.py` is used for calculating the accuracy of 3 implemented methods on the test dataset without the transformation applied. Usage of these files is given the "Usage" section. 
+
 ## Installation
 
 You have been provided with a `fewshotbench.zip` file containing the code for this benchmark. The accompanying presentation will also help you get started.
@@ -51,7 +59,15 @@ python run.py exp.name={exp_name} method=maml dataset=tabula_muris mode=test
 Run `run.py` with the same parameters as the training run, with `mode=test` and it will automatically use the
 best checkpoint (as measured by val ACC) from the most recent training run with that combination of
 exp.name/method/dataset/model. To choose a run conducted at a different time (i.e. not the latest), pass in the timestamp
-in the form `checkpoint.time={yyyymmdd_hhmmss}.` To choose a model from a specific epoch, use `checkpoint.iter=40`. 
+in the form `checkpoint.time={yyyymmdd_hhmmss}.` To choose a model from a specific epoch, use `checkpoint.iter=40`.
+
+### Visualization
+
+Run `visualize_transform.py` with the same parameters as the training run and it will output the visualization in a window. To save the visualization, add the parameter `+output=image.png` where `image.png` is the file where the image will be saved. To run the visualization on a different input batch, add the parameter `+dataloader_index=<number>` where `<number>` is the index of the batch in the dataloader.
+
+### Accuracy comparison of the base and transformed embeddings
+
+Run `compare_base_transform.py` with the same parameters as the training run and it will output the accuracy and the standard deviation of the model without the transformation applied on the test set.
 
 ## Datasets
 
