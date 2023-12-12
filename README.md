@@ -1,6 +1,6 @@
 # Few Shot Benchmark for Biomedical Datasets
 
-In this project, we introduce a novel extension to the existing few-shot learning benchmark. We implement several variants of the Feature Embedding Adaptation with Transformers (FEAT) algorithm proposed by [Ye et al., 2021](https://arxiv.org/abs/1812.03664), with the goal of enhancing the existing framework. The implemented models are applied on two biomedical datasets, namely Tabula Muris and SwissProt.
+In this project, we introduce a novel extension to the existing few-shot learning benchmark. We implement several variants of the Feature Embedding Adaptation with Transformers (FEAT) algorithm proposed by [Ye et al. (2021)](https://arxiv.org/abs/1812.03664), with the goal of enhancing the existing framework. The implemented models are applied on two biomedical datasets, namely Tabula Muris and SwissProt.
 
 The implementations of the methods (FEADS, FEALSTM, FEAT) can be found in the `methods/settoset` folder. Corresponding configuration files are located in the `conf/method` folder, named `feads.yaml`, `fealstm.yaml` and `feat.yaml`.
 
@@ -100,7 +100,7 @@ The provided methods include:
 | ProtoNet | [Snell et al. (2017)](https://proceedings.neurips.cc/paper_files/paper/2017/file/cb8da6767461f2812ae4290eac7cbc42-Paper.pdf) |
 | MatchingNet | [Vinyals et al. (2016)](https://proceedings.neurips.cc/paper/2016/file/90e1357833654983612fb05e3ec9148c-Paper.pdf) |
 | MAML | [Finn et al. (2017)](https://proceedings.mlr.press/v70/finn17a/finn17a.pdf) |
-| FEAT | [Ye et al., 2021](https://arxiv.org/abs/1812.03664) |
+| FEAT | [Ye et al. (2021)](https://arxiv.org/abs/1812.03664) |
 
 
 ## Models
