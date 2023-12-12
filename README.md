@@ -6,7 +6,7 @@ The implementations of the methods (FEADS, FEALSTM, FEAT) can be found in the `m
 
 To facilitate the training and validation processes, we have provided several scripts. The `baselines.sh` script executes the baseline methods on both datasets using default configuration files. For hyperparameter tuning on specific datasets, the `tabula_muris.sh` and `swissprot.sh` scripts are available. To run the training of all implemented methods using the tuned hyperparameters on each dataset, use the `final_hyps.sh` script.
 
-For visualization purposes, the visualize_transform.py Python file is used to visualize the transformation, while compare_base_transform.py is used to calculate the accuracy of the three implemented methods on the test dataset without applying the transformation. Refer to the "Usage" section for guidance on utilizing these files.
+For visualization purposes, the `visualize_transform.py` file is used to visualize the transformation, while `compare_base_transform.py` is used to calculate the accuracy of the three implemented methods on the test dataset without applying the transformation. Refer to the "Usage" section for guidance on utilizing these files.
 
 ## Installation
 
