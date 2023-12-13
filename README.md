@@ -10,7 +10,7 @@ For visualization purposes, the `visualize_transform.py` file is used to visuali
 
 Results of all experiments as well as the notebooks for data analysis are available in the `results` folder.
 
-Note: In order to run code using SwissProt data, the `go-basic.obo` file needs to be put in the repository.
+Note: In order to run the code using SwissProt data, the `go-basic.obo` file needs to be put in the repository.
 
 ## Installation
 
