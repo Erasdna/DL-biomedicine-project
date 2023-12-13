@@ -8,7 +8,7 @@ To facilitate the training and validation processes, we have provided several sc
 
 For visualization purposes, the `visualize_transform.py` file is used to visualize the transformation, while `compare_base_transform.py` is used to calculate the accuracy of the three implemented methods on the test dataset without applying the transformation. Refer to the "Usage" section for guidance on utilizing these files.
 
-Results of all experiments as well as the notebooks for data analysis are available in the `results` folder.
+Results of all experiments and the notebooks for data analysis are available in the `results` folder.
 
 Note: In order to run the code using SwissProt data, the `go-basic.obo` file needs to be put in the repository.
 
